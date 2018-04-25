@@ -62,7 +62,7 @@ namespace DataLayer
         }
 
         /// <summary>
-        /// This will DISPLAY a new supplier.
+        /// This will DISPLAY all suppliers.
         /// </summary>
         /// <returns></returns>
         public List<SupplierDO> ViewAllSuppliers()
@@ -100,12 +100,53 @@ namespace DataLayer
             {
                 //Prints error to console and logs.
                 SupplierErrorHandler(false, "fatal", "SupplierDAO", "ViewAllSuppliers", ex.Message, ex.StackTrace);
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// This will DISPLAY a new supplier.
+        /// </summary>
+        /// <returns></returns>
+        public SupplierDO ViewSupplierAtID(int supplierId)
+        {
+            try
+            {
+                SupplierDO supplier = new SupplierDO();
+                //Opening SQL connection.
+                using (SqlConnection northWndConn = new SqlConnection(connectionString))
+                {
+                    //Creating a new SqlCommand to use a stored procedure.
+                    SqlCommand enterCommand = new SqlCommand("DISPLAY_SUPPLIER_AT_ID", northWndConn);
+                    enterCommand.CommandType = CommandType.StoredProcedure;
+                    enterCommand.Parameters.AddWithValue("@SupplierID", supplierId);
+                    northWndConn.Open();
+
+                    //Using SqlDataAdapter to get SQL table.
+                    DataTable supplyInfo = new DataTable();
+                    using (SqlDataAdapter supplierAdapter = new SqlDataAdapter(enterCommand))
+                    {
+                        supplierAdapter.Fill(supplyInfo);
+                        supplierAdapter.Dispose();
+                    }
+
+                    //Putting datarow into a List of the supplier object.
+                    foreach (DataRow row in supplyInfo.Rows)
+                    {
+                        supplier = MapAllSuppliers(row);
+                    }
+                }
+                //Returning an updated list of the supplier object.
+                return supplier;
+            }
+            catch (Exception ex)
+            {
+                //Prints error to console and logs.
+                SupplierErrorHandler(false, "fatal", "SupplierDAO", "ViewAllSuppliers", ex.Message, ex.StackTrace);
 
                 ex.Data["Message"] = "It Broke";
                 throw ex;
             }
-
-
         }
 
         /// <summary>

@@ -1,0 +1,49 @@
+﻿@using MVCNorthwndCRUD.Models;
+
+@model SupplierPO
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Update Supplier</h2>
+@using (Html.BeginForm("Update", "NorthWnd", FormMethod.Post))
+{
+    @Html.HiddenFor(model => Model.SupplierId)
+    <div class="form-horizontal">
+        @Html.LabelFor(model => Model.ContactName)
+        <div class="form-group">
+            @Html.TextBoxFor(model => Model.ContactName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => Model.ContactName, "", new { @class = "label label-danger" })
+        </div>
+    </div>
+    <div class="form-horizontal">
+        @Html.LabelFor(model => Model.ContactTitle)
+        <div class="form-group">
+            @Html.TextBoxFor(model => Model.ContactTitle, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => Model.ContactTitle, "", new { @class = "label label-danger" })
+        </div>
+    </div>
+    <div class="form-horizontal">
+        @Html.LabelFor(model => Model.PostalCode)
+        <div class="form-group">
+            @Html.TextBoxFor(model => Model.PostalCode, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => Model.PostalCode, "", new { @class = "label label-danger" })
+        </div>
+    </div>
+    <div class="form-horizontal">
+        @Html.LabelFor(model => Model.Country)
+        <div class="form-group">
+            @Html.TextBoxFor(model => Model.Country, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => Model.Country, "", new { @class = "label label-danger" })
+        </div>
+    </div>
+    <div class="form-horizontal">
+        @Html.LabelFor(model => Model.PhoneNumber)
+        <div class="form-group">
+            @Html.TextBoxFor(model => Model.PhoneNumber, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => Model.PhoneNumber, "", new { @class = "label label-danger" })
+        </div>
+    </div>
+    <input class="btn btn-warning" type="submit" value="Submit Data"/>
+}

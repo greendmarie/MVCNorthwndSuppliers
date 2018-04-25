@@ -37,7 +37,7 @@ namespace MVCNorthwndCRUD.Controllers
             {
                 if (ex.Data.Contains("Message"))
                 {
-                    TempData["Message"] = ex.Data["Message"];
+                    TempData["Message"] = "There aren't any suppliers left, you scared them all away!";
                 }
             }
             return View(mappedItems);
@@ -48,25 +48,93 @@ namespace MVCNorthwndCRUD.Controllers
         {
             return View();
         }
+
         [HttpPost]
-        public ActionResult Create(SupplierPO from)
+        public ActionResult Create(SupplierPO form)
         {
-            return View();
+            //Declaring local variables
+            ActionResult oResponse = RedirectToAction("Index", "NorthWnd");
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    SupplierDO dataObject = SupplierMapper.MapPoToDO(form);
+                    dataAccess.CreateNewSuppliers(dataObject);
+
+                    TempData["Message"] = $"{form.ContactName} was created successfully.";
+                }
+                catch (Exception ex)
+                { 
+                    oResponse = View(form);
+                }
+            }
+            else
+            {
+                oResponse = View(form);
+            }
+
+            return oResponse;
         }
+
         [HttpGet]
-        public ActionResult Update()
+        public ActionResult Update(int supplierID)
         {
-            return View();
+            SupplierPO displayObject = new SupplierPO();
+            try
+            {
+                SupplierDO item = dataAccess.ViewSupplierAtID(supplierID);
+                displayObject = SupplierMapper.MapDoToPO(item);
+            }
+            catch (Exception ex)
+            {
+
+                
+            }
+            return View(displayObject);
         }
+
         [HttpPost]
-        public ActionResult Update(SupplierPO from, int Id)
+        public ActionResult Update(SupplierPO form)
         {
-            return View();
+            //Declaring local variables
+            ActionResult oResponse = RedirectToAction("Index", "NorthWnd");
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    SupplierDO dataObject = SupplierMapper.MapPoToDO(form);
+                    dataAccess.UpdateSuppliers(dataObject);
+                }
+                catch (Exception ex)
+                {
+                    oResponse = View(form);
+                }
+            }
+            else
+            {
+                oResponse = View(form);
+            }
+
+            return oResponse;
         }
+
         [HttpGet]
-        public ActionResult Delete()
+        public ActionResult Delete(int supplierID)
         {
-            return View();
+            //Declaring local variables
+            ActionResult oResponse = RedirectToAction("Index", "NorthWnd");
+            try
+            {
+                dataAccess.DeleteSuppliers(supplierID);
+            }
+            catch (Exception ex)
+            {
+
+
+            }
+            return oResponse;
         }
     }
 }

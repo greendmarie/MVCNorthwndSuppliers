@@ -36,6 +36,9 @@
             <th>
                 Phone Number
             </th>
+            <th>
+                Actions
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -58,6 +61,10 @@
                     </td>
                     <td>
                         @item.PhoneNumber
+                    </td>
+                    <td>
+                        @Html.ActionLink("Update","Update","NorthWnd",new { supplierID = item.SupplierId}, null)
+                        @Html.ActionLink("Delete","Delete","NorthWnd",new { supplierID = item.SupplierId}, null)
                     </td>
                 </tr>
             }

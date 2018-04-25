@@ -36,5 +36,33 @@ namespace MVCNorthwndCRUD.Mapping
             }
             return to;
         }
+
+        public static SupplierDO MapPoToDO(SupplierPO from)
+        {
+            SupplierDO to = new SupplierDO();
+            to.SupplierId = from.SupplierId;
+            to.ContactName = from.ContactName;
+            to.ContactTitle = from.ContactTitle;
+            to.PostalCode = from.PostalCode;
+            to.Country = from.Country;
+            to.PhoneNumber = from.PhoneNumber;
+
+            return to;
+        }
+
+        public static List<SupplierDO> MapPoToDO(List<SupplierPO> from)
+        {
+            List<SupplierDO> to = new List<SupplierDO>();
+
+            if (from != null)
+            {
+                foreach (SupplierPO item in from)
+                {
+                    SupplierDO mappedItem = MapPoToDO(item);
+                    to.Add(mappedItem);
+                }
+            }
+            return to;
+        }
     }
 }
