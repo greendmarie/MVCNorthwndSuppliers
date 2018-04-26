@@ -142,13 +142,18 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NorthWndController.cs" />
+    <Compile Include="Custom\SecurityFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Mapping\SupplierMapper.cs" />
+    <Compile Include="Mapping\UserMapper.cs" />
+    <Compile Include="Models\LoginPO.cs" />
     <Compile Include="Models\SupplierPO.cs" />
+    <Compile Include="Models\UserPO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -191,6 +196,8 @@
     <Content Include="Views\NorthWnd\Index.cshtml" />
     <Content Include="Views\NorthWnd\Create.cshtml" />
     <Content Include="Views\NorthWnd\Update.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
