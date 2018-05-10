@@ -8,6 +8,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Configuration;
+using MVCNorthwndCRUD.Custom;
+using System.IO;
 
 namespace MVCNorthwndCRUD.Controllers
 {
@@ -44,6 +46,7 @@ namespace MVCNorthwndCRUD.Controllers
         }
 
         [HttpGet]
+        [SecurityFilter("RoleId", 1, 2, 3)]
         public ActionResult Create()
         {
             return View();
@@ -78,9 +81,11 @@ namespace MVCNorthwndCRUD.Controllers
         }
 
         [HttpGet]
+        [SecurityFilter("RoleId", 1, 2)]
         public ActionResult Update(int supplierID)
         {
             SupplierPO displayObject = new SupplierPO();
+            ActionResult oResponse = View(displayObject);
             try
             {
                 SupplierDO item = dataAccess.ViewSupplierAtID(supplierID);
@@ -88,8 +93,7 @@ namespace MVCNorthwndCRUD.Controllers
             }
             catch (Exception ex)
             {
-
-                
+                TempData["Message"] = "Supplier could not be updated at this time.";
             }
             return View(displayObject);
         }
@@ -106,6 +110,7 @@ namespace MVCNorthwndCRUD.Controllers
                 {
                     SupplierDO dataObject = SupplierMapper.MapPoToDO(form);
                     dataAccess.UpdateSuppliers(dataObject);
+                    TempData["Message"] = "Successfully updated supplier.";
                 }
                 catch (Exception ex)
                 {
@@ -128,13 +133,44 @@ namespace MVCNorthwndCRUD.Controllers
             try
             {
                 dataAccess.DeleteSuppliers(supplierID);
+                TempData["Message"] = "Supplier has been deleted.";
             }
             catch (Exception ex)
             {
-
+                TempData["Message"] = "Supplier could not be deleted at this time.";
 
             }
             return oResponse;
+        }
+
+        [HttpGet]
+        public ActionResult UploadFile()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult UploadFile(HttpPostedFileBase uploadedFile)
+        {
+            string pathToSaveTo = Path.Combine(Server.MapPath("/File/"), uploadedFile.FileName);
+            uploadedFile.SaveAs(pathToSaveTo);
+            return RedirectToAction("Index","Home");
+        }
+
+        [HttpGet]
+        public ActionResult DownloadFile()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult DownloadFile(string name)
+        {
+            string fullPath = Path.Combine(Server.MapPath("/Files/"), name);
+            FileStream stream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
+            return File(stream, "application/octet-stream", name);
         }
     }
 }

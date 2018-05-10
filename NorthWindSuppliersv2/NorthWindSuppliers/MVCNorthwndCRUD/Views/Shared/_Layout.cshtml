@@ -23,18 +23,26 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("View Suppliers", "Index", "NorthWnd")</li>
-                    <li>@Html.ActionLink("Add Supplier", "Create", "NorthWnd")</li>
+
+                    @if(Session["RoleId"] != null)
+                    {
+                        if((int)Session["RoleId"]==1)
+                        {
+                            <li>@Html.ActionLink("Add Supplier", "Create", "NorthWnd")</li>
+                        }
+                    }
+
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     @if (Session["UserID"] != null)
                     {
-                        <li>@Html.ActionLink((string)Session["Username"], "", "")</li>
-                        <li>@Html.ActionLink("Logout", "Login", "Account")</li>
+                        <li>@Html.ActionLink(Session["Username"].ToString(), "", "")</li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
                     }
                     else
                     {
                         <li>@Html.ActionLink("Login", "Login", "Account")</li>
-                        <li>@Html.ActionLink("Register", "Login", "Account")</li>
+                        <li>@Html.ActionLink("Register", "Register", "Account")</li>
                     }
                 </ul>
             </div>

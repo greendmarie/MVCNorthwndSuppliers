@@ -56,7 +56,7 @@ namespace MVCNorthwndCRUD.Controllers
                 }
                 catch(Exception ex)
                 {
-                    //Erroe message
+                    TempData["Message"]="Username or Password was incorrect";
                 }
             }
             else
@@ -105,10 +105,8 @@ namespace MVCNorthwndCRUD.Controllers
         [HttpGet]
         public ActionResult Logout()
         {
-
-
-
-            return RedirectToAction("Index", "Home");
+            Session.Abandon();
+            return RedirectToAction("Login", "Account");
         }
 
 

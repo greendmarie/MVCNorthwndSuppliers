@@ -1,0 +1,68 @@
+﻿@model HttpPostedFileBase
+
+@{
+    ViewBag.Title = "UploadFile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .row{
+        height:100px;
+    }
+    .red{
+        height:100%;
+        background-color:red;
+    }
+
+    .purple {
+        height: 100%;
+        background-color: purple;
+    }
+    .smaller{
+        height:80%;
+    }
+</style>
+
+<div class="row">
+    <div class="red col-md-2 col-sm-2">
+        <div class="row">
+            <div class="smaller red col-md-6 col-sm-6">
+
+            </div>
+            <div class="smaller purple col-md-6 col-sm-6">
+
+            </div>
+        </div>
+    </div>
+    <div class="purple col-md-2 col-sm-2">
+
+    </div>
+    <div class="red col-md-2 col-sm-2">
+
+    </div>
+    <div class="purple col-md-2 col-sm-2">
+
+    </div>
+    <div class="red col-md-2 col-sm-2">
+
+    </div>
+    <div class="purple col-md-2 col-sm-2">
+
+    </div>
+</div>
+
+
+
+
+<h2>UploadFile</h2>
+
+@using (Html.BeginForm("UploadFile", "NorthWnd", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-horizontal">
+        @Html.Label("File Path")
+        <div class="form-group">
+            <input type="file" name="uploadedFile" />
+        </div>
+        <input type="submit" value="Upload" />
+    </div>
+}
